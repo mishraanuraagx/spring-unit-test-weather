@@ -35,6 +35,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public RestTemplate restTemplate() {
+
         RestTemplate rt = defaultRestTemplate();
         rt.setRequestFactory(clientHttpRequestFactory());
         return rt;
@@ -52,7 +53,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         restTemplate.setMessageConverters(Arrays.asList(jsonMessageConverter));
         return restTemplate;
     }
-
     private ClientHttpRequestFactory clientHttpRequestFactory() {
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
         factory.setReadTimeout(timeout);

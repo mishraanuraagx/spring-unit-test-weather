@@ -20,6 +20,7 @@ import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 import static com.teamtreehouse.domain.Favorite.FavoriteBuilder;
 
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
 @DatabaseSetup("classpath:favorites.xml")
@@ -28,6 +29,7 @@ import static com.teamtreehouse.domain.Favorite.FavoriteBuilder;
     DbUnitTestExecutionListener.class
 })
 public class FavoriteDaoTest {
+
     @Autowired
     private FavoriteDao dao;
 
@@ -51,4 +53,5 @@ public class FavoriteDaoTest {
         dao.saveForCurrentUser(fave);
         assertThat(dao.findByPlaceId(placeId),notNullValue(Favorite.class));
     }
+
 }

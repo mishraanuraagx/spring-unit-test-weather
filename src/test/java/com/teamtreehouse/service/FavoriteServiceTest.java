@@ -1,5 +1,6 @@
 package com.teamtreehouse.service;
 
+
 import com.teamtreehouse.dao.FavoriteDao;
 import com.teamtreehouse.domain.Favorite;
 import org.junit.Test;
@@ -7,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -52,4 +54,5 @@ public class FavoriteServiceTest {
         service.findById(1L);
         verify(dao).findOne(1L);
     }
+
 }

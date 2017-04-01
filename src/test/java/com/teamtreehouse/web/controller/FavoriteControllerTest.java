@@ -1,5 +1,8 @@
 package com.teamtreehouse.web.controller;
 
+
+import static org.junit.Assert.*;
+
 import com.teamtreehouse.domain.Favorite;
 import com.teamtreehouse.service.FavoriteNotFoundException;
 import com.teamtreehouse.service.FavoriteService;
@@ -26,63 +29,66 @@ import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FavoriteControllerTest {
-    private MockMvc mockMvc;
 
-    @InjectMocks
-    private FavoriteController controller;
+  private MockMvc mockMvc;
 
-    @Mock
-    private FavoriteService service;
+  @InjectMocks
+  private FavoriteController controller;
 
-    @Before
-    public void setup() {
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-    }
+  @Mock
+  private FavoriteService service;
 
-    @Test
-    public void index_ShouldIncludeFavoritesInModel() throws Exception {
-        // Arrange the mock behavior
-        List<Favorite> favorites = Arrays.asList(
-            new FavoriteBuilder(1L).withAddress("Chicago").withPlaceId("chicago1").build(),
-            new FavoriteBuilder(2L).withAddress("Omaha").withPlaceId("omaha1").build()
-        );
-        when(service.findAll()).thenReturn(favorites);
+  @Before
+  public void setup(){
+    mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+  }
 
-        // Act (perform the MVC request) and Assert results
-        mockMvc.perform(get("/favorites"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("favorite/index"))
-            .andExpect(model().attribute("favorites",favorites));
-        verify(service).findAll();
-    }
+  @Test
+  public void index_ShouldIncludeFavouriteInModel() throws Exception {
+    // Arrange the mock behaviour
+    List<Favorite> favorites = Arrays.asList(
+      new FavoriteBuilder(1L).withAddress("Chicago").withPlaceId("chicago1").build(),
+        new FavoriteBuilder(2L).withAddress("Omaha").withPlaceId("Omaha1").build()
+    );
+    when(service.findAll()).thenReturn(favorites);
+    // Act (perform the MVC request) and Assert results
+    mockMvc.perform(get("/favorites"))
+    .andExpect(status().isOk())
+    .andExpect(view().name("favorite/index"))
+    .andExpect(model().attribute("favorites",favorites));
+    verify(service).findAll();
+  }
 
-    @Test
-    public void add_ShouldRedirectToNewFavorite() throws Exception {
-        // Arrange the mock behavior
-        doAnswer(invocation -> {
-            Favorite f = (Favorite)invocation.getArguments()[0];
-            f.setId(1L);
-            return null;
-        }).when(service).save(any(Favorite.class));
+  @Test
+  public void detail_ShouldRedirectToNewFavorite() throws Exception {
+    // Arrange the mock behaviour
+    doAnswer(invocation -> {
+      Favorite f = (Favorite) invocation.getArguments()[0];
+      f.setId(1L);
+      return null;
+    }).when(service).save(any(Favorite.class));
+    // Act (perform the MVC request) and Assert results
+    mockMvc.perform(
+        post("/favorites")
+        .param("formattedAddress","chicago, il")
+        .param("placeId","windcity")
+    ).andExpect(redirectedUrl("/favorites/1"));
+    verify(service).save(any(Favorite.class));
+  }
 
-        // Act (perform the MVC request) and Assert results
-        mockMvc.perform(
-          post("/favorites")
-            .param("formattedAddress","chicago, il")
-            .param("placeId","windycity")
-        ).andExpect(redirectedUrl("/favorites/1"));
-        verify(service).save(any(Favorite.class));
-    }
+  @Test
+  public void detail_ShouldErrorOnNotFound() throws Exception {
+    // Arrange the mock behaviour
+    when(service.findById(1L)).thenThrow(FavoriteNotFoundException.class);
 
-    @Test
-    public void detail_ShouldErrorOnNotFound() throws Exception {
-        // Arrange the mock behavior
-        when(service.findById(1L)).thenThrow(FavoriteNotFoundException.class);
-
-        // Act (perform the MVC request) and Assert results
-        mockMvc.perform(get("/favorites/1"))
-            .andExpect(view().name("error"))
-                .andExpect(model().attribute("ex", Matchers.instanceOf(FavoriteNotFoundException.class)));
-        verify(service).findById(1L);
-    }
+    // Act (perform the MVC request) and Assert results
+    mockMvc.perform(get("/favorites/1"))
+    .andExpect(view().name("error"))
+    .andExpect(model().attribute("ex", Matchers.instanceOf(FavoriteNotFoundException.class)));
+    verify(service).findById(1L);
+  }
 }
+
+// test yourself /favorite/id
+
+
