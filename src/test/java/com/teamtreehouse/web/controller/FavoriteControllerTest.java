@@ -88,4 +88,4 @@ public class FavoriteControllerTest {
   }
 }
 
-// test urself /favorite/id
+// test yourself /favorite/id
