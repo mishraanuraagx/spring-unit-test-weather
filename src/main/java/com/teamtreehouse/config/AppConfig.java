@@ -41,7 +41,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         return rt;
     }
 
-
     public static RestTemplate defaultRestTemplate() {
         RestTemplate restTemplate = new RestTemplate();
         ObjectMapper jacksonObjectMapper = new ObjectMapper();

@@ -1,5 +1,6 @@
 package com.teamtreehouse.web.controller;
 
+
 import static org.junit.Assert.*;
 
 import com.teamtreehouse.domain.Favorite;
@@ -15,7 +16,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,6 +29,7 @@ import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FavoriteControllerTest {
+
   private MockMvc mockMvc;
 
   @InjectMocks
@@ -89,3 +90,5 @@ public class FavoriteControllerTest {
 }
 
 // test yourself /favorite/id
+
+

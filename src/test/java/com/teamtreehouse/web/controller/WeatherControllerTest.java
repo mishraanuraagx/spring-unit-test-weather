@@ -1,5 +1,6 @@
 package com.teamtreehouse.web.controller;
 
+
 import org.hibernate.validator.constraints.br.TituloEleitoral;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,4 +34,5 @@ public class WeatherControllerTest {
     mockMvc.perform(get("/search").param("q","60657"))
     .andExpect(redirectedUrl("/search/60657"));
   }
+
 }

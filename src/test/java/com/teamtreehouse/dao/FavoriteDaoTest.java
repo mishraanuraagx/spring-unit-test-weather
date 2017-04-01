@@ -1,6 +1,5 @@
 package com.teamtreehouse.dao;
 
-
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.teamtreehouse.Application;
@@ -17,9 +16,10 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.*;
-import static com.teamtreehouse.domain.Favorite.*;
+import static org.hamcrest.Matchers.*;
+import static com.teamtreehouse.domain.Favorite.FavoriteBuilder;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
@@ -29,31 +29,29 @@ import static com.teamtreehouse.domain.Favorite.*;
     DbUnitTestExecutionListener.class
 })
 public class FavoriteDaoTest {
-  @Autowired
-  private FavoriteDao dao;
 
-  @Before
-  public void setup() {
-    User user = new User();
-    user.setId(1L);
-    SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user,null));
-  }
+    @Autowired
+    private FavoriteDao dao;
 
-  @Test
-  public void FindAll_ShouldReturnTwo() throws Exception {
-    assertThat(dao.findAll(),hasSize(2));
-  }
+    @Before
+    public void setup() {
+        User user = new User();
+        user.setId(1L);
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user,null));
+    }
 
-  @Test
-  public void save_ShouldPersistEntity() throws Exception {
-    String placeId = "treehouseFASHFAKIA";
-    Favorite fave = new FavoriteBuilder()
-        .withPlaceId(placeId).build();
+    @Test
+    public void findAll_ShouldReturnTwo() throws Exception {
+        assertThat(dao.findAll(),hasSize(2));
+    }
 
-    dao.saveForCurrentUser(fave);
-    assertThat(dao.findByPlaceId(placeId),notNullValue(Favorite.class));
-
-  }
-
+    @Test
+    public void save_ShouldPersistEntity() throws Exception {
+        String placeId = "treehouseASKDFJASD#";
+        Favorite fave = new FavoriteBuilder()
+            .withPlaceId(placeId).build();
+        dao.saveForCurrentUser(fave);
+        assertThat(dao.findByPlaceId(placeId),notNullValue(Favorite.class));
+    }
 
 }

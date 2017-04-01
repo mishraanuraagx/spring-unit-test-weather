@@ -1,8 +1,5 @@
 package com.teamtreehouse.service;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
-import static org.hamcrest.Matchers.hasSize;
 
 import com.teamtreehouse.config.AppConfig;
 import com.teamtreehouse.service.dto.geocoding.Location;
@@ -24,9 +21,15 @@ import java.time.Duration;
 import java.time.Instant;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.hasSize;
+
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 public class WeatherServiceTest {
+
   @Autowired
   private WeatherService service;
 
